@@ -3,6 +3,7 @@ import { Controller } from "@hotwired/stimulus"
 // Connects to data-controller="insert-in-list"
 export default class extends Controller {
   static targets = ["items", "form"]
+  static values = {position: String}
   connect() {
     // console.log(this.element)
     // console.log(this.itemsTarget)
@@ -20,7 +21,7 @@ export default class extends Controller {
       .then(response => response.json())
       .then((data) => {
         if (data.inserted_item) {
-          this.itemsTarget.insertAdjacentHTML("beforeend", data.inserted_item)
+          this.itemsTarget.insertAdjacentHTML(this.positionValue, data.inserted_item)
         }
         this.formTarget.outerHTML = data.form
       })
